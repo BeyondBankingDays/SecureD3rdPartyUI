@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="securedApp3rdParty">
+  <head >
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="skeleton.css">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+    <link rel="stylesheet" href="main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0"/>
+    <script src="template/header.js"></script>
+    <script src="pages/homepage/homepage.js"></script>
+    <script src="pages/login/login.js"></script>
+    <script src="pages/confirmation/confirmation.js"></script>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+  </head>
+
+  <body>
+        <div ng-include="'template/header.html'">  </div>
+        <div class="content" data-viewport-height="100">
+            <ng-view></ng-view>
+        </div>
+  </body>
+
+</html>

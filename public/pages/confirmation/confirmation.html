@@ -1,0 +1,32 @@
+<div class="animated fadeIn">
+        <div style="text-align:center">
+                <img src="logo.png"/>
+        </div>
+          <div ng-if="!processed">
+              <div>
+                  <p style="text-align:center">3rd Party Application wants to access the following documents. Please select the documents you want to share</p><br>
+                  <div style="padding-left:36%;">
+                      <div><input type="checkbox">Passport</input></div>
+                      <div><input type="checkbox">Residence Permit</input></div>
+                      <div><input type="checkbox">Driving License</input></div>
+                  </div>
+                  <br><br>
+                  <div style="text-align:center">
+                  <i>Approving the request, would allow the 3rd Party Application to gain access on the above mentioned documents</i>
+                </div>
+                  <br>
+                  <div class="row" style="margin-left:44%;">
+                  <button class="btn-primary" ng-click="reject()">Reject</button>
+                  <button class="btn-primary" ng-click="approve()">Approve</button>
+                </div>
+              </div>
+          </div>
+          <br><br>
+
+      
+        <div style="text-align:center;" ng-if="processed">
+              <img style="width:50px; height:50px;" src="redirecting.gif" /><br>
+              Navigating you to the merchant site
+        </div>
+      
+      </div>

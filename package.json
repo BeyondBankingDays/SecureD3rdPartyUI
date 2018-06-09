@@ -1,15 +1,17 @@
 {
   "name": "secured3rdparty",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server"
+  "description": "SecureDs",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "author": "Microsoft",
+  "engines": {
+    "node": ">=6.9.1"
   },
-  "author": "secureD",
-  "license": "ISC",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "lite-server": "^2.3.0"
+    "express": "^4.16.3"
   }
 }

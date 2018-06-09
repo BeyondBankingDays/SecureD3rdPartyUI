@@ -1,0 +1,29 @@
+
+<div class="animated fadeIn">
+  <div ng-if="initial === true">
+    <div>
+        <div>
+            <p style="text-align:center">Please upload the following documents</p><br>
+            <div style="padding-left:36%;">
+                <div>Passport<button style="margin-left:287px;"class="btn-primary">Upload</button></div>
+                <div>Residence Permit<button  style="margin-left:229px;" class="btn-primary">Upload</button></div>
+                <div>Driving License<button  style="margin-left:244px;" class="btn-primary">Upload</button></div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div style="text-align:center">OR</div>
+    <div style="text-align:center">
+        <div style="display:block">Upload using SecureD</div>
+        <button class="btn-primary"> 
+            <img ng-click="redirectToAuthentication()" style="height: 90%;" src="logo.png"/>
+        </button>
+    </div>
+  </div>
+
+  <div style="text-align:center;" ng-if="!initial">
+        <img style="width:50px; height:50px;" src="redirecting.gif" /><br>
+        Redirecting to SecureD page
+  </div>
+
+</div>
