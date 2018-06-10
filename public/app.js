@@ -3,21 +3,17 @@ var app = angular.module('securedApp3rdParty', ['ngRoute', 'app.homepageControll
 angular.module('securedApp3rdParty.controllers', []);
 
 app.config(function ($routeProvider) {
+  let routeList = ['confirmation', 'login', 'success'];
   $routeProvider
     .when('/', {
       templateUrl: 'pages/homepage/homepage.html',
       controller: 'homepageController'
-    })
-    .when('/login', {
-      templateUrl: 'pages/login/login.html',
-      controller: 'loginController'
-    })
-    .when('/confirmation', {
-      templateUrl: 'pages/confirmation/confirmation.html',
-      controller: 'confirmationController'
-    })
-    .when('/success', {
-      templateUrl: 'pages/success/success.html',
-      controller: 'successController'
     });
+  angular.forEach(routeList, function (route) {
+    $routeProvider
+      .when('/' + route, {
+        templateUrl: 'pages/' + route + '/' + route + '.html',
+        controller: route + 'Controller'
+      });
+  });
 });
