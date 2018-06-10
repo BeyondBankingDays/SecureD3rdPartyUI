@@ -41,7 +41,7 @@ angular.module('app.confirmationController', [])
 
           //http://172.16.23.143:8080/documents
 
-          $http.post('http://172.16.23.143:8080/documents/approve', requestObject)
+          $http.post('https://webapisecuredbb.azurewebsites.net/documents/approve', requestObject)
             .then(function (success) {
               $scope.processed = true;
 
