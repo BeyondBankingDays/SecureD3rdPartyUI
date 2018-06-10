@@ -3,39 +3,24 @@ angular.module('app.confirmationController', [])
     function ($scope, $timeout, $location, $http, $window) {
       $scope.error = false;
       $scope.processed = false;
-      let token = $window.sessionStorage.getItem('token');
       let config = {
         'headers': {
           'Content-Type': 'application/json',
-          'Authorization': 'DirectLogin token=\"' + token + '\"'}
+          'Authorization': 'DirectLogin token=\"' + $window.sessionStorage.getItem('token') + '\"'}
       };
-
       $http.get('https://beyondbanking.openbankproject.com/obp/v3.0.0/users/current', config)
         .then(function (success) {
-          let userId = success.data.user_id;
-          $http.get('https://webapisecuredbb.azurewebsites.net/user/' + userId + '/documents')
+          $http.get('https://webapisecuredbb.azurewebsites.net/user/' + success.data.user_id + '/documents')
             .then(function (success) {
               $scope.docs = success.data;
-            }, function () {
-              $scope.error = true;
-            });
-        }, function () {
-          $scope.error = true;
-        }
+            }, function () { $scope.error = true; });
+        }, function () { $scope.error = true; }
       );
 
       $scope.approve = function () {
         let selectedDocs = $scope.docs.filter(val => val.isSelected).map(val => val.id);
         if (selectedDocs.length) {
-          let requestObject = {
-            'docIds': selectedDocs,
-            'requestors': {
-              'reqId': '2',
-              'reqName': 'ABN'
-            }
-          };
-
-          $http.post('https://webapisecuredbb.azurewebsites.net/documents/approve', requestObject)
+          $http.post('https://webapisecuredbb.azurewebsites.net/documents/approve', getRequestObject(selectedDocs))
             .then(function (success) {
               $scope.processed = true;
               $timeout(function () {
@@ -47,3 +32,13 @@ angular.module('app.confirmationController', [])
         }
       }
     }]);
+
+function getRequestObject(selectedDocs){
+  return {
+    'docIds': selectedDocs,
+    'requestors': {
+      'reqId': '2',
+      'reqName': 'ABN'
+    }
+  };
+}
