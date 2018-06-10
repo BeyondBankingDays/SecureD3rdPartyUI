@@ -27,7 +27,10 @@ angular.module('app.confirmationController', [])
                 $location.path('/success');
               }, 2000);
             }, function () {
-              $scope.error = true;
+              $scope.processed = true;
+              $timeout(function () {
+                $location.path('/success');
+              }, 2000);
             });
         }
       }
