@@ -1,54 +1,56 @@
-angular.module('app.confirmationController',[])
-    .controller('confirmationController',['$scope','$timeout','$location', '$http','$window', function($scope, $timeout, $location, $http, $window){
-    
-    $scope.error = false;
-    $scope.processed = false;
-    var token = $window.sessionStorage.getItem("token");
-    var config = {
-        headers : {'Content-Type': 'application/json',
-        'Authorization' : 'DirectLogin token=\"' + token + '\"'
-      }}
+angular.module('app.confirmationController', [])
+  .controller('confirmationController', ['$scope', '$timeout', '$location', '$http', '$window',
+    function ($scope, $timeout, $location, $http, $window) {
 
-    $http.get('https://beyondbanking.openbankproject.com/obp/v3.0.0/users/current',config).then(
-        function(success){
-            var userId = success.data.user_id;
-            $http.get('https://webapisecuredbb.azurewebsites.net/user/' + userId + '/documents').then(function(success){
-                $scope.docs = success.data;
-            }, function(error){
-                $scope.error = true;
-            })
-
-        }, function(error){
-            $scope.error = true;
+      $scope.error = false;
+      $scope.processed = false;
+      let token = $window.sessionStorage.getItem('token');
+      let config = {
+        'headers': {
+          'Content-Type': 'application/json',
+          'Authorization': 'DirectLogin token=\"' + token + '\"'
         }
-    );
+      };
 
-    $scope.approve = function(){
-        angular.forEach($scope.docs,function(doc){
-            var date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
-            doc.requestors =[
-                
-                ];
-            
-            var data = {};
-            data.date = date;
-            data.reqId = '2';
-            data.reqName = 'ABN';
-            doc.requestors.push(data);
-            
-            $http.put('https://webapisecuredbb.azurewebsites.net/documents/'+ doc.id, doc).then(function(success){
-                console.log(success);
-            }, function(error){
-                console.log(error);
+      $http.get('https://beyondbanking.openbankproject.com/obp/v3.0.0/users/current', config).then(
+        function (success) {
+          let userId = success.data.user_id;
+          $http.get('https://webapisecuredbb.azurewebsites.net/user/' + userId + '/documents')
+            .then(function (success) {
+              $scope.docs = success.data;
+            }, function () {
+              $scope.error = true;
             });
 
-        });
-        
-        $scope.processed = true;
+        }, function () {
+          $scope.error = true;
+        }
+      );
 
-        $timeout( function(){
-            $location.path('/success');
-        }, 2000 );
-    }
+      $scope.approve = function () {
+        let selectedDocs = $scope.docs.filter(val => val.isSelected).map(val => val.id);
 
-}]);
+        if (selectedDocs.length) {
+          let requestObject = {
+            'docIds': selectedDocs,
+            'requestors': {
+              'reqId': '2',
+              'reqName': 'ABN'
+            }
+          };
+
+          //http://172.16.23.143:8080/documents
+
+          $http.post('http://172.16.23.143:8080/documents/approve', requestObject)
+            .then(function (success) {
+              $scope.processed = true;
+
+              $timeout(function () {
+                $location.path('/success');
+              }, 2000);
+            }, function () {
+              $scope.error = true;
+            });
+        }
+      }
+    }]);

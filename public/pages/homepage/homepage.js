@@ -8,7 +8,5 @@ angular.module('app.homepageController',[])
         $timeout( function(){
             $location.path('/login');
         }, 2000 );
-
     };
-
 }]);
