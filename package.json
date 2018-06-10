@@ -12,6 +12,14 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "angular": "^1.7.1",
+    "angular-mocks": "^1.7.1",
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "jasmine": "^3.1.0",
+    "karma": "^2.0.2",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.2"
   }
 }
