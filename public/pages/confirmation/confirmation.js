@@ -11,8 +11,8 @@ angular.module('app.confirmationController',[])
 
     $http.get('https://beyondbanking.openbankproject.com/obp/v3.0.0/users/current',config).then(
         function(success){
-            var userId = success.data.token;
-            $http.get('https://webapisecuredbb.azurewebsites.net/user/:token/documents', userId).then(function(success){
+            var userId = success.data.user_id;
+            $http.get('https://webapisecuredbb.azurewebsites.net/user/' + userId + '/documents').then(function(success){
                 $scope.docs = success.data;
             }, function(error){
                 $scope.error = true;
@@ -24,6 +24,26 @@ angular.module('app.confirmationController',[])
     );
 
     $scope.approve = function(){
+        angular.forEach($scope.docs,function(doc){
+            var date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+            doc.requestors =[
+                
+                ];
+            
+            var data = {};
+            data.date = date;
+            data.reqId = '2';
+            data.reqName = 'ABN';
+            doc.requestors.push(data);
+            
+            $http.put('https://webapisecuredbb.azurewebsites.net/documents/'+ doc.id, doc).then(function(success){
+                console.log(success);
+            }, function(error){
+                console.log(error);
+            });
+
+        });
+        
         $scope.processed = true;
 
         $timeout( function(){
