@@ -10,7 +10,7 @@ angular.module('app.confirmationController', [])
       };
       $http.get('https://beyondbanking.openbankproject.com/obp/v3.0.0/users/current', config)
         .then(function (success) {
-          $http.get('https://webapisecuredbb.azurewebsites.net/user/' + success.data.user_id + '/documents')
+          $http.get('https://websecuredapi.azurewebsites.net/user/' + success.data.user_id + '/documents')
             .then(function (success) {
               $scope.docs = success.data;
             }, function () { $scope.error = true; });
@@ -20,7 +20,7 @@ angular.module('app.confirmationController', [])
       $scope.approve = function () {
         let selectedDocs = $scope.docs.filter(val => val.isSelected).map(val => val.id);
         if (selectedDocs.length) {
-          $http.post('https://webapisecuredbb.azurewebsites.net/documents/approve', getRequestObject(selectedDocs))
+          $http.post('https://websecuredapi.azurewebsites.net/documents/approve', getRequestObject(selectedDocs))
             .then(function (success) {
               $scope.processed = true;
               $timeout(function () {
